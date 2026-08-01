@@ -1,0 +1,101 @@
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.area-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.area-image-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.area-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.area-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(31, 31, 31, 0.9) 0%, rgba(31, 31, 31, 0.2) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 2.5rem;
+  transition: var(--transition);
+}
+
+.area-content {
+  color: var(--color-off-white);
+  transform: translateY(40px);
+  transition: transform 0.4s ease;
+}
+
+.area-content h3 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.area-content p {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.area-btn {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.area-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+}
+
+/* Hover effects */
+.area-card:hover .area-image {
+  transform: scale(1.1);
+}
+
+.area-card:hover .area-content {
+  transform: translateY(0);
+}
+
+.area-card:hover .area-content p,
+.area-card:hover .area-btn {
+  opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .areas-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .area-image-container {
+    height: 300px;
+  }
+  
+  .area-content {
+    transform: translateY(0);
+  }
+  
+  .area-content p, .area-btn {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,141 @@
+.footer {
+  background-color: var(--color-black);
+  color: var(--color-off-white);
+  padding: 5rem 0 0;
+  border-top: 1px solid rgba(200, 169, 106, 0.2);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--color-off-white);
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.footer-logo span {
+  color: var(--color-primary);
+  font-weight: 400;
+  margin-left: 5px;
+}
+
+.footer-description {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  color: var(--color-primary);
+  transition: var(--transition);
+}
+
+.social-icons a:hover {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+  transform: translateY(-3px);
+}
+
+.footer-section h3 {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background-color: var(--color-primary);
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  opacity: 0.8;
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  color: var(--color-primary);
+  padding-left: 5px;
+}
+
+.footer-contact {
+  list-style: none;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+.contact-icon {
+  color: var(--color-primary);
+  margin-right: 15px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.map-container {
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
