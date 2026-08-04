@@ -12,12 +12,19 @@ const Properties = () => {
   const [filter, setFilter] = useState('all');
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProps = async () => {
-      const data = await getProperties();
-      setProperties(data);
-      setLoading(false);
+      try {
+        const data = await getProperties();
+        setProperties(data);
+      } catch (err) {
+        console.error("Error fetching properties:", err);
+        setError("Failed to load properties. The database connection might be missing or incorrect.");
+      } finally {
+        setLoading(false);
+      }
     };
     fetchProps();
   }, []);
@@ -92,6 +99,11 @@ const Properties = () => {
           {/* Grid */}
           {loading ? (
             <div className="text-center mt-5">Loading properties...</div>
+          ) : error ? (
+            <div className="text-center mt-5" style={{ color: 'red' }}>
+              <h3>{error}</h3>
+              <p>Check your Vercel Environment Variables to make sure MONGODB_URI is correct.</p>
+            </div>
           ) : (
             <>
               <div className="grid grid-cols-3">
