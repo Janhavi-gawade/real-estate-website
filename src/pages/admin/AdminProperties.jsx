@@ -71,7 +71,10 @@ const AdminProperties = () => {
         method: 'POST',
         body: formDataObj,
       });
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Upload failed: ${response.status} - ${errText}`);
+      }
       const data = await response.json();
       
       const newImages = [...formData.images];
@@ -79,7 +82,7 @@ const AdminProperties = () => {
       setFormData({ ...formData, images: newImages });
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Failed to upload image');
+      alert(`Error: ${error.message}`);
     }
   };
 
