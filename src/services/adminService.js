@@ -10,8 +10,8 @@
  * will remain exactly the same.
  */
 
-// Use the environment variable for API URL. If not found, fallback to localhost for safety.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Use the environment variable for API URL (localhost). If not found (Vercel), fallback to relative /api.
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // --- PROPERTIES ---
 

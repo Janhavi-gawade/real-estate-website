@@ -23,11 +23,16 @@ app.use('/api', apiRoutes);
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Successfully connected to MongoDB Atlas!');
-    // Start server only after DB connection
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+    // Only listen on a port if not in a serverless environment
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
+    }
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error.message);
   });
+
+// Export the app for Vercel Serverless
+module.exports = app;
