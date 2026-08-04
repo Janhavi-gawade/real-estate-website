@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getProperties, saveProperty, deleteProperty, API_URL } from '../../services/adminService';
+import { compressImage } from '../../utils/imageUtils';
 import { Plus, Edit2, Trash2, CheckCircle, XCircle } from 'lucide-react';
 
 const AdminProperties = () => {
@@ -63,10 +64,12 @@ const AdminProperties = () => {
   const handleFileUpload = async (index, file) => {
     if (!file) return;
     
-    const formDataObj = new FormData();
-    formDataObj.append('image', file);
-    
     try {
+      const compressedFile = await compressImage(file);
+      
+      const formDataObj = new FormData();
+      formDataObj.append('image', compressedFile);
+      
       const response = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         body: formDataObj,
