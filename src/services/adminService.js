@@ -11,7 +11,7 @@
  */
 
 // Use the environment variable for API URL (localhost). If not found (Vercel), fallback to relative /api.
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // --- PROPERTIES ---
 

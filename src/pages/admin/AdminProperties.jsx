@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProperties, saveProperty, deleteProperty } from '../../services/adminService';
+import { getProperties, saveProperty, deleteProperty, API_URL } from '../../services/adminService';
 import { Plus, Edit2, Trash2, CheckCircle, XCircle } from 'lucide-react';
 
 const AdminProperties = () => {
@@ -67,7 +67,7 @@ const AdminProperties = () => {
     formDataObj.append('image', file);
     
     try {
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         body: formDataObj,
       });
