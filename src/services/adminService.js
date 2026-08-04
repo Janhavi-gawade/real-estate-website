@@ -17,7 +17,16 @@ const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export const getProperties = async () => {
   const response = await fetch(`${API_URL}/properties`);
-  if (!response.ok) throw new Error('Failed to fetch properties');
+  if (!response.ok) {
+    let errorMsg = `Server returned ${response.status}`;
+    try {
+      const errorData = await response.json();
+      errorMsg = errorData.message || errorMsg;
+    } catch (e) {
+      // response wasn't JSON
+    }
+    throw new Error(errorMsg);
+  }
   return await response.json();
 };
 

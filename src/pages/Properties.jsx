@@ -21,7 +21,7 @@ const Properties = () => {
         setProperties(data);
       } catch (err) {
         console.error("Error fetching properties:", err);
-        setError("Failed to load properties. The database connection might be missing or incorrect.");
+        setError(`Error: ${err.message}`);
       } finally {
         setLoading(false);
       }
