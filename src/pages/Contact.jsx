@@ -28,6 +28,9 @@ const Contact = () => {
                   <div>
                     <h4>Office Address</h4>
                     <p>Office No5, 1st floor, Dharmavat Corner Building, Opp. Gagan Avenue, Kondhwa, Pune-411048</p>
+                    <a href="https://maps.app.goo.gl/vLx5b7E1ae6VT5jF7" target="_blank" rel="noopener noreferrer" style={{ color: '#3b82f6', fontSize: '0.875rem', fontWeight: '500', display: 'inline-block', marginTop: '4px' }}>
+                      Get Directions &rarr;
+                    </a>
                   </div>
                 </div>
                 <div className="info-item">
@@ -98,7 +101,7 @@ const Contact = () => {
       {/* Full width map */}
       <div className="map-full">
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.819777174621!2d-118.4042211244304!3d34.074151716584286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bc04d6d147ab%3A0xd6c7c379fd081ed1!2sBeverly%20Hills%2C%20CA%2090210!5e0!3m2!1sen!2sus!4v1689255012345!5m2!1sen!2sus" 
+          src="https://www.google.com/maps?q=Dharmavat+Corner,+Opp.+Gagan+Avenue,+Kondhwa,+Pune-411048&output=embed" 
           width="100%" 
           height="450" 
           style={{ border: 0 }} 
