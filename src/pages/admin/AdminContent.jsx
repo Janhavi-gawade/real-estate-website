@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getSettings, saveSettings } from '../../services/adminService';
+import { getSettings, saveSettings, API_URL } from '../../services/adminService';
+import { compressImage } from '../../utils/imageUtils';
 import { Save } from 'lucide-react';
 
 const AdminContent = () => {
@@ -26,6 +27,32 @@ const AdminContent = () => {
     setTimeout(() => setSuccess(false), 3000);
   };
 
+  const handleFileUpload = async (field, file) => {
+    if (!file) return;
+    
+    try {
+      const compressedFile = await compressImage(file);
+      
+      const formDataObj = new FormData();
+      formDataObj.append('image', compressedFile);
+      
+      const response = await fetch(`${API_URL}/upload`, {
+        method: 'POST',
+        body: formDataObj,
+      });
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Upload failed: ${response.status} - ${errText}`);
+      }
+      const data = await response.json();
+      
+      setSettings({ ...settings, [field]: data.url });
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   if (loading) return <div>Loading content settings...</div>;
 
   return (
@@ -36,14 +63,22 @@ const AdminContent = () => {
 
       <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         <div>
-          <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Hero Banner Image URL</label>
-          <input 
-            type="url" 
-            value={settings.heroBanner} 
-            onChange={e => setSettings({...settings, heroBanner: e.target.value})} 
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} 
-            required 
-          />
+          <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Hero Banner Image (Upload or URL)</label>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <input 
+              type="file" 
+              accept="image/*"
+              onChange={e => handleFileUpload('heroBanner', e.target.files[0])} 
+              style={{ width: '220px', padding: '6px', fontSize: '0.9rem' }} 
+            />
+            <input 
+              type="url" 
+              value={settings.heroBanner} 
+              onChange={e => setSettings({...settings, heroBanner: e.target.value})} 
+              style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} 
+              required 
+            />
+          </div>
           {settings.heroBanner && (
             <img src={settings.heroBanner} alt="Hero Banner Preview" style={{ marginTop: '12px', height: '200px', width: '100%', objectFit: 'cover', borderRadius: '8px' }} />
           )}
@@ -95,14 +130,22 @@ const AdminContent = () => {
               />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Founder Photo URL</label>
-              <input 
-                type="url" 
-                value={settings.founderPhoto || ''} 
-                onChange={e => setSettings({...settings, founderPhoto: e.target.value})} 
-                style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} 
-                placeholder="https://..."
-              />
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Founder Photo (Upload or URL)</label>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={e => handleFileUpload('founderPhoto', e.target.files[0])} 
+                  style={{ width: '220px', padding: '6px', fontSize: '0.9rem' }} 
+                />
+                <input 
+                  type="url" 
+                  value={settings.founderPhoto || ''} 
+                  onChange={e => setSettings({...settings, founderPhoto: e.target.value})} 
+                  style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} 
+                  placeholder="https://..."
+                />
+              </div>
               {settings.founderPhoto && (
                 <img src={settings.founderPhoto} alt="Founder Preview" style={{ marginTop: '12px', height: '100px', width: '100px', objectFit: 'cover', borderRadius: '50%' }} />
               )}
