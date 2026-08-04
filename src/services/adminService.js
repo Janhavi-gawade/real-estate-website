@@ -1,4 +1,4 @@
-import { initialProperties, initialEnquiries, initialSettings } from './mockData';
+
 
 /**
  * Data Service Layer
@@ -10,91 +10,76 @@ import { initialProperties, initialEnquiries, initialSettings } from './mockData
  * will remain exactly the same.
  */
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-const getStorage = (key, defaultData) => {
-  const data = localStorage.getItem(key);
-  if (!data) {
-    localStorage.setItem(key, JSON.stringify(defaultData));
-    return defaultData;
-  }
-  return JSON.parse(data);
-};
-
-const setStorage = (key, data) => {
-  localStorage.setItem(key, JSON.stringify(data));
-};
+// Use the environment variable for API URL. If not found, fallback to localhost for safety.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // --- PROPERTIES ---
 
 export const getProperties = async () => {
-  await delay(300); // Simulate network latency
-  return getStorage('re_properties', initialProperties);
+  const response = await fetch(`${API_URL}/properties`);
+  if (!response.ok) throw new Error('Failed to fetch properties');
+  return await response.json();
 };
 
 export const saveProperty = async (propertyData) => {
-  await delay(500);
-  const properties = getStorage('re_properties', initialProperties);
-  
-  if (propertyData.id) {
-    // Edit
-    const index = properties.findIndex(p => p.id === propertyData.id);
-    if (index !== -1) properties[index] = propertyData;
-  } else {
-    // Create
-    propertyData.id = Date.now().toString();
-    properties.push(propertyData);
-  }
-  
-  setStorage('re_properties', properties);
-  return propertyData;
+  const isEditing = !!propertyData.id;
+  const url = isEditing ? `${API_URL}/properties/${propertyData.id}` : `${API_URL}/properties`;
+  const method = isEditing ? 'PUT' : 'POST';
+
+  const response = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(propertyData)
+  });
+  if (!response.ok) throw new Error('Failed to save property');
+  return await response.json();
 };
 
 export const deleteProperty = async (id) => {
-  await delay(400);
-  let properties = getStorage('re_properties', initialProperties);
-  properties = properties.filter(p => p.id !== id);
-  setStorage('re_properties', properties);
+  const response = await fetch(`${API_URL}/properties/${id}`, { method: 'DELETE' });
+  if (!response.ok) throw new Error('Failed to delete property');
   return true;
 };
 
 // --- ENQUIRIES ---
 
 export const getEnquiries = async () => {
-  await delay(300);
-  return getStorage('re_enquiries', initialEnquiries);
+  const response = await fetch(`${API_URL}/enquiries`);
+  if (!response.ok) throw new Error('Failed to fetch enquiries');
+  return await response.json();
 };
 
 export const updateEnquiryStatus = async (id, contacted) => {
-  await delay(300);
-  const enquiries = getStorage('re_enquiries', initialEnquiries);
-  const index = enquiries.findIndex(e => e.id === id);
-  if (index !== -1) {
-    enquiries[index].contacted = contacted;
-    setStorage('re_enquiries', enquiries);
-  }
-  return enquiries[index];
+  const response = await fetch(`${API_URL}/enquiries/${id}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contacted })
+  });
+  if (!response.ok) throw new Error('Failed to update enquiry status');
+  return await response.json();
 };
 
 export const deleteEnquiry = async (id) => {
-  await delay(300);
-  let enquiries = getStorage('re_enquiries', initialEnquiries);
-  enquiries = enquiries.filter(e => e.id !== id);
-  setStorage('re_enquiries', enquiries);
+  const response = await fetch(`${API_URL}/enquiries/${id}`, { method: 'DELETE' });
+  if (!response.ok) throw new Error('Failed to delete enquiry');
   return true;
 };
 
 // --- SETTINGS (Content & Contact) ---
 
 export const getSettings = async () => {
-  await delay(200);
-  return getStorage('re_settings', initialSettings);
+  const response = await fetch(`${API_URL}/settings`);
+  if (!response.ok) throw new Error('Failed to fetch settings');
+  return await response.json();
 };
 
 export const saveSettings = async (newSettings) => {
-  await delay(400);
-  const current = getStorage('re_settings', initialSettings);
-  const updated = { ...current, ...newSettings };
-  setStorage('re_settings', updated);
-  return updated;
+  const response = await fetch(`${API_URL}/settings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newSettings)
+  });
+  if (!response.ok) throw new Error('Failed to save settings');
+  return await response.json();
 };
+

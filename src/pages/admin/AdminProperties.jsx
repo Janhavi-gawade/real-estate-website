@@ -60,6 +60,29 @@ const AdminProperties = () => {
     setFormData({ ...formData, amenities: newAmenities });
   };
 
+  const handleFileUpload = async (index, file) => {
+    if (!file) return;
+    
+    const formDataObj = new FormData();
+    formDataObj.append('image', file);
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: formDataObj,
+      });
+      if (!response.ok) throw new Error('Upload failed');
+      const data = await response.json();
+      
+      const newImages = [...formData.images];
+      newImages[index] = data.url;
+      setFormData({ ...formData, images: newImages });
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload image');
+    }
+  };
+
   const handleImageChange = (index, value) => {
     const newImages = [...formData.images];
     newImages[index] = value;
@@ -151,10 +174,27 @@ const AdminProperties = () => {
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Property Images (URLs)</label>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Property Images (Upload or URL)</label>
             {formData.images.map((url, index) => (
               <div key={index} style={{ display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center' }}>
-                <input required type="url" value={url} onChange={e => handleImageChange(index, e.target.value)} style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} placeholder="https://..." />
+                
+                {/* File Input */}
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={e => handleFileUpload(index, e.target.files[0])} 
+                  style={{ width: '220px', padding: '6px', fontSize: '0.9rem' }} 
+                />
+                
+                {/* Text input fallback for external URLs */}
+                <input 
+                  type="url" 
+                  value={url} 
+                  onChange={e => handleImageChange(index, e.target.value)} 
+                  style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} 
+                  placeholder="Or paste image URL here..." 
+                />
+
                 {formData.images.length > 1 && (
                   <button type="button" onClick={() => removeImageField(index)} className="admin-btn danger" style={{ padding: '10px' }}><Trash2 size={16}/></button>
                 )}
