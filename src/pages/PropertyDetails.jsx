@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Building2, Square, MapPin, Check, MessageCircle, Phone, ArrowLeft } from 'lucide-react';
 import Button from '../components/Button';
 import { getProperties, getSettings } from '../services/adminService';
+import { optimizeImage } from '../utils/imageUtils';
 import './PropertyDetails.css';
 
 const PropertyDetails = () => {
@@ -81,7 +82,7 @@ const PropertyDetails = () => {
 
           <div className="gallery-section">
             <div className="main-image">
-              <img src={mainImage} alt={property.title} />
+              <img src={optimizeImage(mainImage, 1200)} alt={property.title} />
             </div>
             <div className="thumbnail-grid">
               {validImages.map((img, index) => (
@@ -90,7 +91,7 @@ const PropertyDetails = () => {
                   className={`thumbnail ${mainImage === img ? 'active' : ''}`}
                   onClick={() => setMainImage(img)}
                 >
-                  <img src={img} alt={`Thumbnail ${index + 1}`} />
+                  <img src={optimizeImage(img, 400)} alt={`Thumbnail ${index + 1}`} />
                 </div>
               ))}
             </div>
