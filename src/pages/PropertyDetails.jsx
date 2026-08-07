@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Building2, Square, MapPin, Check, MessageCircle, Phone, ArrowLeft } from 'lucide-react';
 import Button from '../components/Button';
-import { getProperties, getSettings } from '../services/adminService';
+import { getProperties, getSettings, saveEnquiry } from '../services/adminService';
 import { optimizeImage } from '../utils/imageUtils';
 import './PropertyDetails.css';
 
@@ -35,25 +35,27 @@ const PropertyDetails = () => {
     fetchData();
   }, [id]);
 
-  const handleEnquirySubmit = (e) => {
+  const handleEnquirySubmit = async (e) => {
     e.preventDefault();
-    const newEnquiry = {
-      id: Date.now().toString(),
-      name: enquiry.name,
-      email: enquiry.email,
-      phone: enquiry.phone,
-      message: enquiry.message,
-      propertyOfInterest: property.title,
-      date: new Date().toISOString(),
-      contacted: false
-    };
-    
-    // Save to local storage for Admin Panel to read
-    const existing = JSON.parse(localStorage.getItem('re_enquiries') || '[]');
-    localStorage.setItem('re_enquiries', JSON.stringify([...existing, newEnquiry]));
-    
-    setEnquirySent(true);
-    setEnquiry({ name: '', email: '', phone: '', message: '' });
+    try {
+      const newEnquiry = {
+        name: enquiry.name,
+        email: enquiry.email,
+        phone: enquiry.phone,
+        message: enquiry.message,
+        propertyOfInterest: property.title,
+        date: new Date().toISOString(),
+        contacted: false
+      };
+      
+      await saveEnquiry(newEnquiry);
+      
+      setEnquirySent(true);
+      setEnquiry({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      console.error("Failed to send enquiry:", error);
+      alert("Failed to send enquiry. Please try again or contact via phone.");
+    }
   };
 
   if (loading) return <div style={{ textAlign: 'center', padding: '100px' }}>Loading...</div>;
@@ -151,10 +153,10 @@ const PropertyDetails = () => {
                 <p>Contact our agent to schedule a viewing or request more details.</p>
                 
                 <div className="contact-buttons">
-                  <a href={`tel:${settings?.contactPhone || '+910000000000'}`} className="btn btn-outline" style={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '10px'}}>
+                  <a href={`tel:${settings?.contactPhone || '+918806861786'}`} className="btn btn-outline" style={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '10px'}}>
                     <Phone size={18} style={{marginRight: '8px'}}/> Call Agent
                   </a>
-                  <a href={`https://wa.me/${settings?.contactWhatsApp?.replace(/[^0-9]/g, '') || ''}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '20px'}}>
+                  <a href={`https://wa.me/${settings?.contactWhatsApp ? (settings.contactWhatsApp.replace(/[^0-9]/g, '').length === 10 ? '91' + settings.contactWhatsApp.replace(/[^0-9]/g, '') : settings.contactWhatsApp.replace(/[^0-9]/g, '')) : '918806861786'}?text=${encodeURIComponent('Hi, I am interested in the property: ' + property.title)}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '20px'}}>
                     <MessageCircle size={18} style={{marginRight: '8px'}}/> WhatsApp
                   </a>
                 </div>

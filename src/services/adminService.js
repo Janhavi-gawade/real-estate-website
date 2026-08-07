@@ -58,6 +58,16 @@ export const getEnquiries = async () => {
   return await response.json();
 };
 
+export const saveEnquiry = async (enquiryData) => {
+  const response = await fetch(`${API_URL}/enquiries`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(enquiryData)
+  });
+  if (!response.ok) throw new Error('Failed to save enquiry');
+  return await response.json();
+};
+
 export const updateEnquiryStatus = async (id, contacted) => {
   const response = await fetch(`${API_URL}/enquiries/${id}/status`, {
     method: 'PUT',

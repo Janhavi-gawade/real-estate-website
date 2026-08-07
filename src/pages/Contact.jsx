@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import { saveEnquiry } from '../services/adminService';
 import Button from '../components/Button';
 import './Contact.css';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: 'buy', message: '' });
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setStatus('sending');
+      await saveEnquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        propertyOfInterest: `General Inquiry: ${formData.subject}`,
+        date: new Date().toISOString(),
+        contacted: false
+      });
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', subject: 'buy', message: '' });
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="contact-page animate-fade-in">
       <div className="page-header">
@@ -64,35 +89,46 @@ const Contact = () => {
             </div>
 
             <div className="contact-form-container">
-              <form className="contact-form">
-                <h3>Send Us a Message</h3>
-                <div className="form-group">
-                  <label htmlFor="name">Full Name</label>
-                  <input type="text" id="name" placeholder="John Doe" required />
+              {status === 'success' ? (
+                <div style={{ padding: '30px', textAlign: 'center', backgroundColor: '#dcfce7', borderRadius: '8px', color: '#166534' }}>
+                  <h3>Thank You!</h3>
+                  <p>Your message has been sent successfully. We will get back to you soon.</p>
+                  <Button onClick={() => setStatus('')} variant="outline" style={{marginTop: '20px'}}>Send Another Message</Button>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" placeholder="john@example.com" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" placeholder="+1 (555) 000-0000" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="subject">Subject</label>
-                  <select id="subject">
-                    <option value="buy">Buying Property</option>
-                    <option value="sell">Selling Property</option>
-                    <option value="rent">Renting Property</option>
-                    <option value="other">Other Inquiry</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="message">Message</label>
-                  <textarea id="message" rows="5" placeholder="How can we help you?" required></textarea>
-                </div>
-                <Button variant="primary" style={{width: '100%'}}>Send Message</Button>
-              </form>
+              ) : (
+                <form className="contact-form" onSubmit={handleSubmit}>
+                  <h3>Send Us a Message</h3>
+                  {status === 'error' && <p style={{color: 'red', marginBottom: '15px'}}>Failed to send message. Please try again.</p>}
+                  <div className="form-group">
+                    <label htmlFor="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 0000000000" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="subject">Subject</label>
+                    <select id="subject" value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})}>
+                      <option value="buy">Buying Property</option>
+                      <option value="sell">Selling Property</option>
+                      <option value="rent">Renting Property</option>
+                      <option value="other">Other Inquiry</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="message">Message</label>
+                    <textarea id="message" rows="5" placeholder="How can we help you?" required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+                  </div>
+                  <Button type="submit" variant="primary" style={{width: '100%'}}>
+                    {status === 'sending' ? 'Sending...' : 'Send Message'}
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>
