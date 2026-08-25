@@ -1,11 +1,11 @@
 :root {
-  --color-black: #000000;
-  --color-primary: #0A529B;
-  --color-primary-hover: #073D75;
+  --color-black: #0A529B;
+  --color-primary: #000000;
+  --color-primary-hover: #333333;
   --color-off-white: #FFFFFF;
   --color-white: #FFFFFF;
   --color-gray: #757575;
-  --color-dark-gray: #333333;
+  --color-dark-gray: #073D75;
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
