@@ -41,7 +41,10 @@ app.use(async (req, res, next) => {
 });
 
 // API Routes
+const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
+
+app.use('/api/auth', authRoutes);
 app.use('/api', apiRoutes);
 
 // Start local dev server if not in production

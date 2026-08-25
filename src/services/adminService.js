@@ -1,43 +1,56 @@
-
-
-/**
- * Data Service Layer
- * 
- * Note: Currently this uses localStorage so you can test it immediately without 
- * setting up a backend database. The API is structured asynchronously (Promises)
- * so that when you are ready to use a real database (like Firebase or Supabase),
- * you only need to change the implementation inside these functions, and the UI
- * will remain exactly the same.
- */
-
-// Use the environment variable for API URL (localhost). If not found (Vercel), fallback to relative /api.
 export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
-// --- PROPERTIES ---
+// --- AUTHENTICATION ---
+export const loginAdmin = async (username, password) => {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Login failed');
+  }
+  
+  const data = await response.json();
+  localStorage.setItem('adminToken', data.token);
+  return data;
+};
 
+export const logoutAdmin = () => {
+  localStorage.removeItem('adminToken');
+};
+
+export const getAuthHeaders = () => {
+  const token = localStorage.getItem('adminToken');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+};
+
+export const getUploadHeaders = () => {
+  const token = localStorage.getItem('adminToken');
+  return {
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+};
+
+// --- PROPERTIES ---
 export const getProperties = async () => {
   const response = await fetch(`${API_URL}/properties`);
-  if (!response.ok) {
-    let errorMsg = `Server returned ${response.status}`;
-    try {
-      const errorData = await response.json();
-      errorMsg = errorData.message || errorMsg;
-    } catch (e) {
-      // response wasn't JSON
-    }
-    throw new Error(errorMsg);
-  }
+  if (!response.ok) throw new Error('Failed to fetch properties');
   return await response.json();
 };
 
 export const saveProperty = async (propertyData) => {
   const isEditing = !!propertyData.id;
   const url = isEditing ? `${API_URL}/properties/${propertyData.id}` : `${API_URL}/properties`;
-  const method = isEditing ? 'PUT' : 'POST';
-
+  
   const response = await fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
+    method: isEditing ? 'PUT' : 'POST',
+    headers: getAuthHeaders(),
     body: JSON.stringify(propertyData)
   });
   if (!response.ok) throw new Error('Failed to save property');
@@ -45,15 +58,19 @@ export const saveProperty = async (propertyData) => {
 };
 
 export const deleteProperty = async (id) => {
-  const response = await fetch(`${API_URL}/properties/${id}`, { method: 'DELETE' });
+  const response = await fetch(`${API_URL}/properties/${id}`, { 
+    method: 'DELETE',
+    headers: getAuthHeaders()
+  });
   if (!response.ok) throw new Error('Failed to delete property');
   return true;
 };
 
 // --- ENQUIRIES ---
-
 export const getEnquiries = async () => {
-  const response = await fetch(`${API_URL}/enquiries`);
+  const response = await fetch(`${API_URL}/enquiries`, {
+    headers: getAuthHeaders()
+  });
   if (!response.ok) throw new Error('Failed to fetch enquiries');
   return await response.json();
 };
@@ -61,7 +78,7 @@ export const getEnquiries = async () => {
 export const saveEnquiry = async (enquiryData) => {
   const response = await fetch(`${API_URL}/enquiries`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' }, // Public route, no auth needed
     body: JSON.stringify(enquiryData)
   });
   if (!response.ok) throw new Error('Failed to save enquiry');
@@ -71,7 +88,7 @@ export const saveEnquiry = async (enquiryData) => {
 export const updateEnquiryStatus = async (id, contacted) => {
   const response = await fetch(`${API_URL}/enquiries/${id}/status`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAuthHeaders(),
     body: JSON.stringify({ contacted })
   });
   if (!response.ok) throw new Error('Failed to update enquiry status');
@@ -79,13 +96,15 @@ export const updateEnquiryStatus = async (id, contacted) => {
 };
 
 export const deleteEnquiry = async (id) => {
-  const response = await fetch(`${API_URL}/enquiries/${id}`, { method: 'DELETE' });
+  const response = await fetch(`${API_URL}/enquiries/${id}`, { 
+    method: 'DELETE',
+    headers: getAuthHeaders()
+  });
   if (!response.ok) throw new Error('Failed to delete enquiry');
   return true;
 };
 
 // --- SETTINGS (Content & Contact) ---
-
 export const getSettings = async () => {
   const response = await fetch(`${API_URL}/settings`);
   if (!response.ok) throw new Error('Failed to fetch settings');
@@ -95,10 +114,9 @@ export const getSettings = async () => {
 export const saveSettings = async (newSettings) => {
   const response = await fetch(`${API_URL}/settings`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAuthHeaders(),
     body: JSON.stringify(newSettings)
   });
   if (!response.ok) throw new Error('Failed to save settings');
   return await response.json();
 };
-

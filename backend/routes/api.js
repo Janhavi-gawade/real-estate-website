@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const auth = require('../middleware/authMiddleware');
 
 // Configure Cloudinary
 cloudinary.config({
@@ -22,7 +23,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 // --- FILE UPLOAD ---
-router.post('/upload', upload.single('image'), (req, res) => {
+router.post('/upload', auth, upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
@@ -44,7 +45,7 @@ router.get('/properties', async (req, res) => {
   }
 });
 
-router.post('/properties', async (req, res) => {
+router.post('/properties', auth, async (req, res) => {
   try {
     const property = new Property(req.body);
     const savedProperty = await property.save();
@@ -54,7 +55,7 @@ router.post('/properties', async (req, res) => {
   }
 });
 
-router.put('/properties/:id', async (req, res) => {
+router.put('/properties/:id', auth, async (req, res) => {
   try {
     const property = await Property.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!property) return res.status(404).json({ message: 'Property not found' });
@@ -64,7 +65,7 @@ router.put('/properties/:id', async (req, res) => {
   }
 });
 
-router.delete('/properties/:id', async (req, res) => {
+router.delete('/properties/:id', auth, async (req, res) => {
   try {
     const property = await Property.findByIdAndDelete(req.params.id);
     if (!property) return res.status(404).json({ message: 'Property not found' });
@@ -75,7 +76,7 @@ router.delete('/properties/:id', async (req, res) => {
 });
 
 // --- ENQUIRIES ---
-router.get('/enquiries', async (req, res) => {
+router.get('/enquiries', auth, async (req, res) => {
   try {
     const enquiries = await Enquiry.find().sort({ date: -1 });
     res.json(enquiries);
@@ -94,7 +95,7 @@ router.post('/enquiries', async (req, res) => {
   }
 });
 
-router.put('/enquiries/:id/status', async (req, res) => {
+router.put('/enquiries/:id/status', auth, async (req, res) => {
   try {
     const enquiry = await Enquiry.findByIdAndUpdate(
       req.params.id, 
@@ -108,7 +109,7 @@ router.put('/enquiries/:id/status', async (req, res) => {
   }
 });
 
-router.delete('/enquiries/:id', async (req, res) => {
+router.delete('/enquiries/:id', auth, async (req, res) => {
   try {
     const enquiry = await Enquiry.findByIdAndDelete(req.params.id);
     if (!enquiry) return res.status(404).json({ message: 'Enquiry not found' });
@@ -132,7 +133,7 @@ router.get('/settings', async (req, res) => {
   }
 });
 
-router.post('/settings', async (req, res) => {
+router.post('/settings', auth, async (req, res) => {
   try {
     let setting = await Setting.findOne();
     if (setting) {

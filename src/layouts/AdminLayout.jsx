@@ -25,6 +25,11 @@ const AdminLayout = () => {
     { path: '/admin/contact', icon: Contact, label: 'Contact Info' },
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    window.location.href = '/admin/login';
+  };
+
   return (
     <div className="admin-layout">
       {/* Sidebar */}
@@ -45,10 +50,10 @@ const AdminLayout = () => {
           ))}
         </nav>
         <div className="admin-sidebar-footer">
-          <Link to="/admin/login" className="admin-nav-item logout">
+          <button onClick={handleLogout} className="admin-nav-item logout" style={{ background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}>
             <LogOut size={20} />
             <span>Logout</span>
-          </Link>
+          </button>
           <Link to="/" className="admin-nav-item view-site" target="_blank">
             <span>View Live Site</span>
           </Link>

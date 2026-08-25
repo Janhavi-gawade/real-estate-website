@@ -27,6 +27,9 @@ import AdminTestimonials from './pages/admin/AdminTestimonials';
 import AdminGallery from './pages/admin/AdminGallery';
 import AdminContact from './pages/admin/AdminContact';
 
+// Protected Route
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
   return (
     <Router>
@@ -49,15 +52,17 @@ function App() {
           {/* Admin Login Route (No Sidebar) */}
           <Route path="/admin/login" element={<AdminLogin />} />
 
-          {/* Admin Routes with Sidebar */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="properties" element={<AdminProperties />} />
-            <Route path="enquiries" element={<AdminEnquiries />} />
-            <Route path="content" element={<AdminContent />} />
-            <Route path="testimonials" element={<AdminTestimonials />} />
-            <Route path="gallery" element={<AdminGallery />} />
-            <Route path="contact" element={<AdminContact />} />
+          {/* Admin Routes with Sidebar (Protected) */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="properties" element={<AdminProperties />} />
+              <Route path="enquiries" element={<AdminEnquiries />} />
+              <Route path="content" element={<AdminContent />} />
+              <Route path="testimonials" element={<AdminTestimonials />} />
+              <Route path="gallery" element={<AdminGallery />} />
+              <Route path="contact" element={<AdminContact />} />
+            </Route>
           </Route>
         </Routes>
       </div>

@@ -72,6 +72,9 @@ const AdminProperties = () => {
       
       const response = await fetch(`${API_URL}/upload`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+        },
         body: formDataObj,
       });
       if (!response.ok) {
