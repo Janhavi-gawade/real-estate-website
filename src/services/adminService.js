@@ -39,7 +39,7 @@ export const getUploadHeaders = () => {
 
 // --- PROPERTIES ---
 export const getProperties = async () => {
-  const response = await fetch(`${API_URL}/properties`);
+  const response = await fetch(`${API_URL}/properties`, { cache: 'no-store' });
   if (!response.ok) throw new Error('Failed to fetch properties');
   return await response.json();
 };
@@ -69,7 +69,8 @@ export const deleteProperty = async (id) => {
 // --- ENQUIRIES ---
 export const getEnquiries = async () => {
   const response = await fetch(`${API_URL}/enquiries`, {
-    headers: getAuthHeaders()
+    headers: getAuthHeaders(),
+    cache: 'no-store'
   });
   if (!response.ok) throw new Error('Failed to fetch enquiries');
   return await response.json();
