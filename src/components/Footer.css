@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--color-black);
-  color: var(--color-dark-gray);
+  background-color: var(--color-white);
+  color: var(--color-black);
   padding: 5rem 0 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -15,7 +15,7 @@
 .footer-logo {
   font-family: var(--font-heading);
   font-size: 1.8rem;
-  color: var(--color-dark-gray);
+  color: var(--color-black);
   margin-bottom: 1.5rem;
   letter-spacing: 2px;
 }
@@ -116,7 +116,7 @@
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .footer-bottom {

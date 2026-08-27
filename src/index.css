@@ -1,11 +1,11 @@
 :root {
-  --color-black: #FFFFFF; /* Re-mapped to White for Nav/Footer backgrounds */
-  --color-primary: #374151; /* Dark Slate Gray for Buttons/Accents */
-  --color-primary-hover: #111827; /* Almost Black for hover */
-  --color-off-white: #F3F4F6; /* Light Gray for body background */
-  --color-white: #FFFFFF; /* Pure White for cards */
+  --color-black: #111827; /* Dark Gray / Black for TEXT */
+  --color-primary: #374151; /* Medium Dark Gray for Buttons/Accents */
+  --color-primary-hover: #111827; /* Darker hover */
+  --color-off-white: #F3F4F6; /* Light Gray */
+  --color-white: #FFFFFF; /* Pure White */
   --color-gray: #4B5563; /* Medium Gray for secondary text */
-  --color-dark-gray: #111827; /* Very Dark Gray/Black for main text */
+  --color-dark-gray: #111827; /* Consistent dark text */
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -22,7 +22,7 @@
 body {
   font-family: var(--font-body);
   background-color: var(--color-off-white);
-  color: var(--color-dark-gray);
+  color: var(--color-black);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -30,7 +30,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--color-dark-gray);
+  color: var(--color-black);
   margin-bottom: 1rem;
 }
 
@@ -85,13 +85,14 @@ img {
   text-align: center;
 }
 
+/* Force light backgrounds for previously dark sections */
 .bg-black {
-  background-color: var(--color-black);
-  color: var(--color-dark-gray);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 .bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4 {
-  color: var(--color-dark-gray);
+  color: var(--color-black);
 }
 
 /* Animations */
@@ -105,21 +106,21 @@ img {
 }
 
 .page-header {
-  background-color: var(--color-black);
-  color: var(--color-dark-gray);
+  background-color: var(--color-white);
+  color: var(--color-black);
   padding: 6rem 0 3rem;
   text-align: center;
   border-bottom: 1px solid #E5E7EB;
 }
 
 .page-header h1 {
-  color: var(--color-dark-gray);
+  color: var(--color-black);
   font-size: 3rem;
   margin-bottom: 0.5rem;
 }
 
 .page-header p {
-  color: var(--color-off-white);
+  color: var(--color-black);
   opacity: 0.8;
 }
 
