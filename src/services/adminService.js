@@ -72,11 +72,12 @@ export const getEnquiries = async () => {
     headers: getAuthHeaders(),
     cache: 'no-store'
   });
-  if (!response.ok) {
-    const errText = await response.text();
-    alert(`Debug Error: getEnquiries failed with status ${response.status}. Message: ${errText}`);
-    throw new Error('Failed to fetch enquiries');
+  if (response.status === 401) {
+    localStorage.removeItem('adminToken');
+    window.location.href = '/admin/login';
+    throw new Error('Session expired');
   }
+  if (!response.ok) throw new Error('Failed to fetch enquiries');
   return await response.json();
 };
 
