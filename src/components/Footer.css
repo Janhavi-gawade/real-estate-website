@@ -1,8 +1,8 @@
 .footer {
   background-color: var(--color-black);
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   padding: 5rem 0 0;
-  border-top: 1px solid rgba(200, 169, 106, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .footer-container {
@@ -15,7 +15,7 @@
 .footer-logo {
   font-family: var(--font-heading);
   font-size: 1.8rem;
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   margin-bottom: 1.5rem;
   letter-spacing: 2px;
 }
@@ -43,7 +43,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
   color: var(--color-primary);
   transition: var(--transition);
@@ -120,7 +120,7 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1.5rem 0;
   text-align: center;
   font-size: 0.9rem;

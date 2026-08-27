@@ -1,11 +1,11 @@
 :root {
-  --color-black: #1E293B; /* Deep Slate Gray (30% Secondary - used for text, nav, footers) */
-  --color-primary: #475569; /* Slate Gray (10% Accent - used for buttons and highlights) */
-  --color-primary-hover: #334155; /* Darker Slate for interactive hover states */
-  --color-off-white: #F8FAFC; /* Very Light Cool Gray (60% Dominant Background) */
-  --color-white: #FFFFFF; /* Pure White (for elevated cards) */
-  --color-gray: #94A3B8; /* Muted Gray (for secondary text) */
-  --color-dark-gray: #334155; /* Consistent dark gray */
+  --color-black: #FFFFFF; /* Re-mapped to White for Nav/Footer backgrounds */
+  --color-primary: #374151; /* Dark Slate Gray for Buttons/Accents */
+  --color-primary-hover: #111827; /* Almost Black for hover */
+  --color-off-white: #F3F4F6; /* Light Gray for body background */
+  --color-white: #FFFFFF; /* Pure White for cards */
+  --color-gray: #4B5563; /* Medium Gray for secondary text */
+  --color-dark-gray: #111827; /* Very Dark Gray/Black for main text */
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -22,7 +22,7 @@
 body {
   font-family: var(--font-body);
   background-color: var(--color-off-white);
-  color: var(--color-black);
+  color: var(--color-dark-gray);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -30,7 +30,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--color-black);
+  color: var(--color-dark-gray);
   margin-bottom: 1rem;
 }
 
@@ -87,11 +87,11 @@ img {
 
 .bg-black {
   background-color: var(--color-black);
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
 }
 
 .bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4 {
-  color: var(--color-primary);
+  color: var(--color-dark-gray);
 }
 
 /* Animations */
@@ -106,13 +106,14 @@ img {
 
 .page-header {
   background-color: var(--color-black);
-  color: var(--color-primary);
+  color: var(--color-dark-gray);
   padding: 6rem 0 3rem;
   text-align: center;
+  border-bottom: 1px solid #E5E7EB;
 }
 
 .page-header h1 {
-  color: var(--color-primary);
+  color: var(--color-dark-gray);
   font-size: 3rem;
   margin-bottom: 0.5rem;
 }

@@ -19,7 +19,7 @@
 }
 
 .navbar-logo {
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   justify-self: start;
   cursor: pointer;
   text-decoration: none;
@@ -55,7 +55,7 @@
 }
 
 .nav-links {
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   text-decoration: none;
   padding: 0.5rem 1rem;
   font-family: var(--font-body);
