@@ -1,11 +1,11 @@
 :root {
-  --color-black: #3A3A3A; /* Soft Warm Charcoal for contrast */
-  --color-primary: #C0A062; /* Elegant Champagne Gold for accents/buttons */
-  --color-primary-hover: #A3854E; /* Darker Champagne for hover */
-  --color-off-white: #FAF9F6; /* Warm Pearl/Cream for body background */
-  --color-white: #FFFFFF; /* Pure white for cards */
-  --color-gray: #757575; /* Slate gray for secondary text */
-  --color-dark-gray: #4A4A4A; /* Soft dark gray */
+  --color-black: #1E293B; /* Deep Slate Gray (30% Secondary - used for text, nav, footers) */
+  --color-primary: #475569; /* Slate Gray (10% Accent - used for buttons and highlights) */
+  --color-primary-hover: #334155; /* Darker Slate for interactive hover states */
+  --color-off-white: #F8FAFC; /* Very Light Cool Gray (60% Dominant Background) */
+  --color-white: #FFFFFF; /* Pure White (for elevated cards) */
+  --color-gray: #94A3B8; /* Muted Gray (for secondary text) */
+  --color-dark-gray: #334155; /* Consistent dark gray */
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;

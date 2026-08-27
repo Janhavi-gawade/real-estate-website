@@ -33,7 +33,7 @@
   top: 15px;
   left: 15px;
   background-color: var(--color-black);
-  color: var(--color-primary);
+  color: var(--color-off-white);
   padding: 5px 12px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -47,7 +47,7 @@
   bottom: 15px;
   right: 15px;
   background-color: var(--color-primary);
-  color: var(--color-black);
+  color: var(--color-off-white);
   padding: 8px 15px;
   font-size: 1.2rem;
   font-family: var(--font-heading);
@@ -116,5 +116,5 @@
 
 .view-details-btn:hover {
   background-color: var(--color-black);
-  color: var(--color-primary);
+  color: var(--color-off-white);
 }
