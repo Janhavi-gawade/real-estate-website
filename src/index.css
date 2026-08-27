@@ -1,11 +1,12 @@
 :root {
-  --color-black: #143D30; /* Deep Forest Green (used for Navbar, Footers, main text) */
-  --color-primary: #D4AF37; /* Premium Gold (used for buttons, accents, icons) */
-  --color-primary-hover: #B5952F; /* Darker Gold for hover effects */
-  --color-off-white: #F8F9FA; /* Light, elegant background color */
-  --color-white: #FFFFFF; /* Pure white for cards and floating elements */
-  --color-gray: #64748B; /* Soft slate gray for secondary text */
-  --color-dark-gray: #0F172A; /* Extreme dark contrast if needed */
+  --color-black: #0B1020; /* Deep Navy (used for Navbar, Footers, page headers) */
+  --color-primary: #6C63FF; /* Electric Purple (used for buttons, accents) */
+  --color-primary-hover: #5A52D5; /* Darker Purple for hover */
+  --color-off-white: #0B1020; /* Deep Navy for body background */
+  --color-white: #151B2E; /* Cards Background */
+  --color-gray: #94A3B8; /* Slate gray for secondary text */
+  --color-dark-gray: #F8FAFC; /* Near white for text */
+  --color-accent: #00D4FF; /* Cyan accent */
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -22,7 +23,7 @@
 body {
   font-family: var(--font-body);
   background-color: var(--color-off-white);
-  color: var(--color-black);
+  color: var(--color-dark-gray);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -30,7 +31,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--color-black);
+  color: var(--color-dark-gray);
   margin-bottom: 1rem;
 }
 
@@ -87,7 +88,7 @@ img {
 
 .bg-black {
   background-color: var(--color-black);
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
 }
 
 .bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4 {
@@ -118,7 +119,7 @@ img {
 }
 
 .page-header p {
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   opacity: 0.8;
 }
 
