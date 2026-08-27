@@ -1,11 +1,11 @@
 :root {
-  --color-black: #0A529B;
-  --color-primary: #000000;
-  --color-primary-hover: #333333;
-  --color-off-white: #FFFFFF;
-  --color-white: #FFFFFF;
-  --color-gray: #757575;
-  --color-dark-gray: #073D75;
+  --color-black: #1A2B4C; /* Deep Royal Blue (used for Navbar, Footers, main text) */
+  --color-primary: #D4AF37; /* Premium Gold (used for buttons, accents, icons) */
+  --color-primary-hover: #B5952F; /* Darker Gold for hover effects */
+  --color-off-white: #F8F9FA; /* Light, elegant background color */
+  --color-white: #FFFFFF; /* Pure white for cards and floating elements */
+  --color-gray: #64748B; /* Soft slate gray for secondary text */
+  --color-dark-gray: #0F172A; /* Extreme dark contrast if needed */
 
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
