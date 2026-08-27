@@ -7,7 +7,7 @@
 }
 
 .review-card {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   padding: 2.5rem;
   border-radius: 4px;
   border: 1px solid rgba(200, 169, 106, 0.2);
@@ -54,7 +54,7 @@
   font-size: 1.1rem;
   line-height: 1.8;
   font-style: italic;
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   opacity: 0.9;
 }
 

@@ -38,7 +38,7 @@
 }
 
 .area-content {
-  color: var(--color-off-white);
+  color: #FFFFFF;
   transform: translateY(40px);
   transition: transform 0.4s ease;
 }

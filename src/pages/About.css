@@ -21,7 +21,7 @@
 
 .mission-card {
   padding: 3rem;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(200, 169, 106, 0.2);
   border-radius: 4px;
   transition: var(--transition);
@@ -39,7 +39,7 @@
 }
 
 .mission-card p {
-  color: var(--color-off-white);
+  color: var(--color-dark-gray);
   font-size: 1.1rem;
   opacity: 0.9;
 }
